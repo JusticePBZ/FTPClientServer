@@ -30,7 +30,7 @@ using esp32Pool::polledTimeout::oneShotMs;
 #define FTP_DEBUG_MSG(fmt, ...)                                          \
     do                                                                   \
     {                                                                    \
-        DEBUG_ESP_PORT.printf_P(PSTR("[FTP] " fmt "\n"), ##__VA_ARGS__); \
+        DEBUG_ESP_PORT.printf(PSTR("[FTP] " fmt "\n"), ##__VA_ARGS__); \
         yield();                                                         \
     } while (0)
 #else

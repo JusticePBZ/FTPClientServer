@@ -213,6 +213,7 @@ int8_t FTPClient::controlConnect()
   {
     FTP_DEBUG_MSG("Ignoring CA verification - FTP only");
   }
+	//IPAddress my_address = IPAddress(192,168,3,82);
   control.connect(_server->servername.c_str(), _server->port);
   FTP_DEBUG_MSG("Connection to %s:%d ... %s", _server->servername.c_str(), _server->port, control.connected() ? PSTR("OK") : PSTR("failed"));
   if (control.connected())
