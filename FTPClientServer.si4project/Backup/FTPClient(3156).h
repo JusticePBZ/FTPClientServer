@@ -81,8 +81,6 @@ public:
 	// check status
 	const Status &check();
 
-	uint32_t getLastBytesTransfered();
-
 	// call freqently (e.g. in loop()), when using non-blocking mode
 	void handleFTP();
 

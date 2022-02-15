@@ -129,10 +129,10 @@ bool FTPCommon::doNetworkToFile()
     {
         if (navail > fileBufferSize)
             navail = fileBufferSize;
+        FTP_DEBUG_MSG("Transfer %d bytes net->FS", navail);
         navail = data.read(fileBuffer, navail);
         file.write(fileBuffer, navail);
         bytesTransfered += navail;
-				FTP_DEBUG_MSG("Transfer %d bytes net->FS, already %d bytes", navail, bytesTransfered);
     }
 
     if (!data.connected() && (navail <= 0))

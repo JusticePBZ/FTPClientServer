@@ -292,6 +292,3 @@ bool FTPClient::waitFor(const int16_t respCode, const __FlashStringHelper *error
   }
   return false;
 }
-uint32_t FTPClient::getLastBytesTransfered(){
-	return bytesTransfered;
-}

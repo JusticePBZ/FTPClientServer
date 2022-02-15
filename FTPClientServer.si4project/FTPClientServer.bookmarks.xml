@@ -8,12 +8,12 @@
 			Name="7559328632632051202202"
 			Comment=""
 			File="FTPCommon.cpp"
-			Line="116"
+			Line="119"
 			Column="23"
-			Symbol="FTPCommon.doNetworkToFile"
-			SymbolInstance="0.0"
+			Symbol="FTPCommon.doFiletoNetwork"
+			SymbolInstance="0"
 			SymbolType="Member Function"
-			LineOffset="0"
+			LineOffset="27"
 			/>
 	</Bookmarks>
 </SourceInsightBookmarks>
