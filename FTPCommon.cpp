@@ -1,7 +1,8 @@
 #include "FTPCommon.h"
 
-FTPCommon::FTPCommon(FS &_FSImplementation) : THEFS(_FSImplementation), sTimeOutMs(FTP_TIME_OUT * 60 * 1000), aTimeout(FTP_TIME_OUT * 60 * 1000)
+FTPCommon::FTPCommon(SerialFlashChip     _serialFlash) : sTimeOutMs(FTP_TIME_OUT * 60 * 1000), aTimeout(FTP_TIME_OUT * 60 * 1000)
 {
+	ftp_serial_flash = _serialFlash;
 }
 
 FTPCommon::~FTPCommon()
@@ -91,6 +92,7 @@ bool FTPCommon::parseDataIpPort(const char *p)
 
 bool FTPCommon::doFiletoNetwork()
 {
+		/*
     // data connection lost or no more bytes to transfer?
     if (!data.connected() || (bytesTransfered >= file.size()))
     {
@@ -112,13 +114,17 @@ bool FTPCommon::doFiletoNetwork()
     }
 
     return (nb > 0);
+    */
 }
 
 bool FTPCommon::doNetworkToFile()
 {
     // Avoid blocking by never reading more bytes than are available
     int16_t navail = data.available();
-
+		/*
+		if navail == 0 when first time
+			ftp sever no this file
+		*/
     if (navail > 0)
     {
         if (navail > fileBufferSize)

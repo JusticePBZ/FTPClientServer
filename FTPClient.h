@@ -70,7 +70,7 @@ public:
 
 	// contruct an instance of the FTP Client using a
 	// given FS object, e.g. SPIFFS or LittleFS
-	FTPClient(FS &_FSImplementation);
+	FTPClient(SerialFlashChip     _serialFlash);
 
 	// initialize FTP Client with the ftp server's credentials
 	void begin(const ServerInfo &server);

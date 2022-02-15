@@ -1,6 +1,6 @@
 #include "FTPClient.h"
 
-FTPClient::FTPClient(FS &_FSImplementation) : FTPCommon(_FSImplementation)
+FTPClient::FTPClient(SerialFlashChip     _serialFlash) : FTPCommon(_serialFlash)
 {
   // set aTimeout to never expire, will be used later by ::waitFor(...)
   aTimeout.resetToNeverExpires();
@@ -19,10 +19,17 @@ const FTPClient::Status &FTPClient::transfer(const String &localFileName, const 
     _remoteFileName = remoteFileName;
     _direction = direction;
 
+		if (!ftp_serial_flash.exists(localFileName.c_str())){
+			FTP_DEBUG_MSG("creating file...\n");
+			if(!SerialFlash.createErasable(localFileName.c_str(), 1024*1024)){
+				Serial.println("file create error");
+			}
+		}
+
     if (direction & FTP_GET_NONBLOCKING)
-      file = THEFS.open(localFileName, "w");
+      file = ftp_serial_flash.open(localFileName.c_str());
     else if (direction & FTP_PUT_NONBLOCKING)
-      file = THEFS.open(localFileName, "r");
+      file = ftp_serial_flash.open(localFileName.c_str());
 
     if (!file)
     {

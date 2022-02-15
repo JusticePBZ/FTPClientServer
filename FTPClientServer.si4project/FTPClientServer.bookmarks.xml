@@ -3,5 +3,17 @@
 	AppVer="4.00.0120"
 	AppVerMinReader="4.00.0009"
 	>
-	<Bookmarks/>
+	<Bookmarks>
+		<Mark
+			Name="7559328632632051202202"
+			Comment=""
+			File="FTPCommon.cpp"
+			Line="116"
+			Column="23"
+			Symbol="FTPCommon.doNetworkToFile"
+			SymbolInstance="0.0"
+			SymbolType="Member Function"
+			LineOffset="0"
+			/>
+	</Bookmarks>
 </SourceInsightBookmarks>

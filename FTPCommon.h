@@ -2,7 +2,8 @@
 #define FTP_COMMON_H
 
 #include <stdint.h>
-#include <FS.h>
+//#include <FS.h>
+#include <SerialFlash.h>
 #include <WiFiClient.h>
 #include <WString.h>
 
@@ -25,12 +26,14 @@ using esp32Pool::polledTimeout::oneShotMs;
 #define FTP_TIME_OUT 5           // Disconnect client after 5 minutes of inactivity
 #define FTP_CMD_SIZE 127         // allow max. 127 chars in a received command
 
+#define FTP_DEBUG
+
 // Use ESP8266 Core Debug functionality
-#ifdef DEBUG_ESP_PORT
+#ifdef FTP_DEBUG
 #define FTP_DEBUG_MSG(fmt, ...)                                          \
     do                                                                   \
     {                                                                    \
-        DEBUG_ESP_PORT.printf(PSTR("[FTP] " fmt "\n"), ##__VA_ARGS__); \
+        Serial.printf(PSTR("[FTP] " fmt "\n"), ##__VA_ARGS__); \
         yield();                                                         \
     } while (0)
 #else
@@ -100,7 +103,7 @@ class FTPCommon
 public:
     // contruct an instance of the FTP Server or Client using a
     // given FS object, e.g. SPIFFS or LittleFS
-    FTPCommon(FS &_FSImplementation);
+    FTPCommon(SerialFlashChip     _serialFlash);
     virtual ~FTPCommon();
 
     // stops the FTP Server or Client, i.e. stops control and data connections
@@ -117,8 +120,8 @@ protected:
     WiFiClient control;
     WiFiClient data;
 
-    File file;
-    FS &THEFS;
+		SerialFlashChip ftp_serial_flash;
+    SerialFlashFile file;
 
     IPAddress dataIP;   // IP address for PORT (active) mode
     uint16_t dataPort = // holds our PASV port number or the port number provided by PORT
