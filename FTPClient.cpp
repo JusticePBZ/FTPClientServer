@@ -20,10 +20,11 @@ const FTPClient::Status &FTPClient::transfer(const String &localFileName, const 
     _direction = direction;
 
 		if (!ftp_serial_flash.exists(localFileName.c_str())){
-			FTP_DEBUG_MSG("creating file...\n");
+			Serial.println("Not found file");
+			/*FTP_DEBUG_MSG("creating file...\n");
 			if(!SerialFlash.createErasable(localFileName.c_str(), 1024*1024)){
 				Serial.println("file create error");
-			}
+			}*/
 		}
 
     if (direction & FTP_GET_NONBLOCKING)

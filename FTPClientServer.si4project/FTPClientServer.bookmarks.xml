@@ -10,10 +10,10 @@
 			File="FTPCommon.cpp"
 			Line="119"
 			Column="23"
-			Symbol="FTPCommon.doFiletoNetwork"
-			SymbolInstance="0"
+			Symbol="FTPCommon.doNetworkToFile"
+			SymbolInstance="0.0"
 			SymbolType="Member Function"
-			LineOffset="27"
+			LineOffset="0"
 			/>
 	</Bookmarks>
 </SourceInsightBookmarks>
