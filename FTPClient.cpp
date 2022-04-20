@@ -96,9 +96,19 @@ void FTPClient::handleFTP()
     if (waitFor(220 /* 220 (vsFTPd version) */, F("No server greeting")))
     {
       FTP_DEBUG_MSG(">>> USER %s", _server->login.c_str());
-	  delay(10);
-      control.printf_P(PSTR("USER %s\n"), _server->login.c_str());
+      //control.printf(PSTR("USER %s\n"), _server->login.c_str());
+	  control.print(F("USER "));
+	  control.println(F(_server->login.c_str()));
       ftpState = cUser;
+	  /* TEST */
+	  //bool waitAns = waitFor(331 /* 331 Password */);
+	  //FTP_DEBUG_MSG("waitAns = %d", waitAns);
+	  //delay(10);
+	  //FTP_DEBUG_MSG(">>> PASS %s", _server->password.c_str());
+      //control.printf(PSTR("PASS %s\n"), _server->password.c_str());
+	  //control.print(F("PASS "));
+      //control.println(F(_server->password.c_str()));
+	  //ftpState = cPassword;
     }
   }
   else if (cUser == ftpState)
@@ -106,8 +116,9 @@ void FTPClient::handleFTP()
     if (waitFor(331 /* 331 Password */))
     {
       FTP_DEBUG_MSG(">>> PASS %s", _server->password.c_str());
-	  delay(10);
-      control.printf_P(PSTR("PASS %s\n"), _server->password.c_str());
+      //control.printf_P(PSTR("PASS %s\n"), _server->password.c_str());
+	  control.print(F("PASS "));
+      control.println(F(_server->password.c_str()));
       ftpState = cPassword;
     }
   }
@@ -116,7 +127,8 @@ void FTPClient::handleFTP()
     if (waitFor(230 /* 230 Login successful*/))
     {
       FTP_DEBUG_MSG(">>> PASV");
-      control.printf_P(PSTR("PASV\n"));
+      //control.printf_P(PSTR("PASV\n"));
+	  control.println(F("PASV"));
       ftpState = cPassive;
     }
   }
@@ -174,12 +186,16 @@ void FTPClient::handleFTP()
       if (_direction & FTP_PUT_NONBLOCKING)
       {
         FTP_DEBUG_MSG(">>> STOR %s", _remoteFileName.c_str());
-        control.printf_P(PSTR("STOR %s\n"), _remoteFileName.c_str());
+		control.print(F("STOR "));
+		control.println(F(_remoteFileName.c_str()));
+        //control.printf_P(PSTR("STOR %s\n"), _remoteFileName.c_str());
       }
       else if (_direction & FTP_GET_NONBLOCKING)
       {
         FTP_DEBUG_MSG(">>> RETR %s", _remoteFileName.c_str());
-        control.printf_P(PSTR("RETR %s\n"), _remoteFileName.c_str());
+		control.print(F("RETR "));
+		control.println(F(_remoteFileName.c_str()));
+        //control.printf_P(PSTR("RETR %s\n"), _remoteFileName.c_str());
       }
     }
   }
@@ -207,7 +223,8 @@ void FTPClient::handleFTP()
   else if (cQuit == ftpState)
   {
     FTP_DEBUG_MSG(">>> QUIT");
-    control.printf_P(PSTR("QUIT\n"));
+    //control.printf_P(PSTR("QUIT\n"));
+	control.println(F("QUIT"));
     _serverStatus.result = OK;
     ftpState = cIdle;
   }

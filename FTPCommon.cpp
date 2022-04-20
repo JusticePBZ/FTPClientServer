@@ -92,7 +92,7 @@ bool FTPCommon::parseDataIpPort(const char *p)
 
 bool FTPCommon::doFiletoNetwork()
 {
-		/*
+	/* //用不到直接先註解了
     // data connection lost or no more bytes to transfer?
     if (!data.connected() || (bytesTransfered >= file.size()))
     {
@@ -121,10 +121,16 @@ bool FTPCommon::doNetworkToFile()
 {
     // Avoid blocking by never reading more bytes than are available
     int16_t navail = data.available();
-		/*
-		if navail == 0 when first time
-			ftp sever no this file
-		*/
+	static int16_t zero_navail_count = 0;
+	if (data.connected() && navail == 0 && bytesTransfered==0){
+		zero_navail_count++;
+		FTP_DEBUG_MSG("******zero_navail_count = %d,Already transferd %d bytes******",zero_navail_count,bytesTransfered);
+		if (zero_navail_count >= 100){
+			zero_navail_count = 0;
+			return false;
+		}
+	}
+
     if (navail > 0)
     {
         if (navail > fileBufferSize)
@@ -132,12 +138,14 @@ bool FTPCommon::doNetworkToFile()
         navail = data.read(fileBuffer, navail);
         file.write(fileBuffer, navail);
         bytesTransfered += navail;
-				FTP_DEBUG_MSG("Transfer %d bytes net->FS, already %d bytes", navail, bytesTransfered);
+		zero_navail_count = 0;
+		FTP_DEBUG_MSG("Transfer %d bytes net->FS, already %d bytes", navail, bytesTransfered);
     }
 
     if (!data.connected() && (navail <= 0))
     {
         // connection closed or no more bytes to read
+		zero_navail_count = 0;
         return false;
     }
     else
