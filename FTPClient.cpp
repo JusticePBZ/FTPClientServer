@@ -96,6 +96,7 @@ void FTPClient::handleFTP()
     if (waitFor(220 /* 220 (vsFTPd version) */, F("No server greeting")))
     {
       FTP_DEBUG_MSG(">>> USER %s", _server->login.c_str());
+	  delay(10);
       control.printf_P(PSTR("USER %s\n"), _server->login.c_str());
       ftpState = cUser;
     }
@@ -105,6 +106,7 @@ void FTPClient::handleFTP()
     if (waitFor(331 /* 331 Password */))
     {
       FTP_DEBUG_MSG(">>> PASS %s", _server->password.c_str());
+	  delay(10);
       control.printf_P(PSTR("PASS %s\n"), _server->password.c_str());
       ftpState = cPassword;
     }

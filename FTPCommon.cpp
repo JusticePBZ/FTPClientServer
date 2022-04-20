@@ -1,6 +1,6 @@
 #include "FTPCommon.h"
 
-FTPCommon::FTPCommon(SerialFlashChip     _serialFlash) : sTimeOutMs(FTP_TIME_OUT * 60 * 1000), aTimeout(FTP_TIME_OUT * 60 * 1000)
+FTPCommon::FTPCommon(SerialFlashChip     _serialFlash) : sTimeOutMs(FTP_TIME_OUT * 60 * 1000), aTimeout((FTP_TIME_OUT+5) * 60 * 1000)
 {
 	ftp_serial_flash = _serialFlash;
 }
